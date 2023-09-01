@@ -1,26 +1,21 @@
 const handleCategory = async () => {
     const res = await fetch("https://openapi.programming-hero.com/api/videos/categories");
     const data = await res.json();
-
     const tabContainer = document.getElementById("tab-container");
 
     const trimeData = data.data;
     
     trimeData.forEach((category) => {
         const div = document.createElement("div");
-
-
         div.innerHTML = `<button onclick="handleButton('${category.category_id}')" class="btn normal-case">${category.category}</button>`;
-        
         tabContainer.appendChild(div);
     });
+
 };
 
 const handleButton = async (categoryId) => {
-    //console.log(categoryId);
     const res = await fetch(`https://openapi.programming-hero.com/api/videos/category/${categoryId}`);
     const data = await res.json();
-
     const cardContainer = document.getElementById("card-container");
     cardContainer.innerHTML = "";
 
@@ -28,10 +23,8 @@ const handleButton = async (categoryId) => {
     oopsContainer.innerHTML = "";
 
     const trimeData = data.data;
-    console.log(trimeData);
-
+    
     if (trimeData.length === 0) {
-        
         // Handle the case when there are no videos
         const div = document.createElement("div");
         div.innerHTML = `
@@ -39,42 +32,22 @@ const handleButton = async (categoryId) => {
             <img src="./icon/Icon.png" alt="" srcset="">
             <h1 class="text-xl md:text-3xl font-bold text-center">Oops!! Sorry, There is no <br> content here</h1>
         </div>`;
-    
-            oopsContainer.appendChild(div);
-     
-    }
-
-    else{
-
-    trimeData.forEach((videos) => {
-        const div = document.createElement("div");
-        /* Timing Convert */
-        
-        // Total seconds
-const totalSeconds = videos.others.posted_date;
-console.log(totalSeconds);
-
-// Calculate hours
-const hours = Math.floor(totalSeconds / 3600);
-
-// Calculate remaining seconds after extracting hours
-const remainingSeconds = totalSeconds % 3600;
-
-// Calculate minutes
-const minutes = Math.floor(remainingSeconds / 60);
-
-// Output the result
-console.log(hours + "hrs " + minutes + " min ago");
-
-       // console.log(second);
-
-
-        div.innerHTML = `
-        <div class="gallery h-40">
-            <figure>
-                <img src=${videos?.thumbnail} class="rounded-md h-40 w-72">
-            </figure>
-            <h2 class="profile-times relative w-[180px] top-[-27px] left-[94px] rounded-md text-center bg-[#171717] text-[#fff]">${hours} hrs ${minutes} min ago</h2>
+        oopsContainer.appendChild(div);
+    } else {
+        trimeData.forEach((videos) => {
+            const div = document.createElement("div");
+            // Calculate hours and minutes
+            const totalSeconds = videos.others.posted_date;
+            const hours = Math.floor(totalSeconds / 3600);
+            const remainingSeconds = totalSeconds % 3600;
+            const minutes = Math.floor(remainingSeconds / 60);
+            
+            div.innerHTML = `
+            <div class="gallery h-40">
+                <figure>
+                    <img src=${videos?.thumbnail} class="rounded-md h-40 w-72">
+                </figure>
+                <h2 class="profile-times relative w-[180px] top-[-27px] left-[94px] rounded-md text-center bg-[#171717] text-[#fff]">${hours} hrs ${minutes} min ago</h2>
             </div>
             <div class="card-body p-0">
                 <div class="profile-container flex m-3 gap-3">
@@ -93,15 +66,16 @@ console.log(hours + "hrs " + minutes + " min ago");
                     </div>
                 </div>
             </div>`;
-
-        cardContainer.appendChild(div);
-    });
-}
+            cardContainer.appendChild(div);
+        });
+    }
 };
-
-
 
 
 handleCategory();
 handleButton("1000");
 
+
+const blogPage = () => {
+    window.location.href = "blog.html";
+};
