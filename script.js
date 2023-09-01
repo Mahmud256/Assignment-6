@@ -48,10 +48,34 @@ const handleButton = async (categoryId) => {
 
     trimeData.forEach((videos) => {
         const div = document.createElement("div");
+        /* Timing Convert */
+        
+        // Total seconds
+const totalSeconds = videos.others.posted_date;
+console.log(totalSeconds);
+
+// Calculate hours
+const hours = Math.floor(totalSeconds / 3600);
+
+// Calculate remaining seconds after extracting hours
+const remainingSeconds = totalSeconds % 3600;
+
+// Calculate minutes
+const minutes = Math.floor(remainingSeconds / 60);
+
+// Output the result
+console.log(hours + "hrs " + minutes + " min ago");
+
+       // console.log(second);
+
+
         div.innerHTML = `
+        <div class="gallery h-40">
             <figure>
                 <img src=${videos?.thumbnail} class="rounded-md h-40 w-72">
             </figure>
+            <h2 class="profile-times relative w-[180px] top-[-27px] left-[94px] rounded-md text-center bg-[#171717] text-[#fff]">${hours} hrs ${minutes} min ago</h2>
+            </div>
             <div class="card-body p-0">
                 <div class="profile-container flex m-3 gap-3">
                     <div class="profile-img flex">
