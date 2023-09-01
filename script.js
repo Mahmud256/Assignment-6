@@ -37,7 +37,7 @@ const handleButton = async (categoryId) => {
         div.innerHTML = `
         <div class="flex flex-col items-center gap-3">
             <img src="./icon/Icon.png" alt="" srcset="">
-            <h1 class="text-3xl font-bold text-center">Oops!! Sorry, There is no <br> content here</h1>
+            <h1 class="text-xl md:text-3xl font-bold text-center">Oops!! Sorry, There is no <br> content here</h1>
         </div>`;
     
             oopsContainer.appendChild(div);
