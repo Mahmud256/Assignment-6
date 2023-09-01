@@ -5,8 +5,11 @@ const handleCategory = async () => {
     const tabContainer = document.getElementById("tab-container");
 
     const trimeData = data.data;
+    
     trimeData.forEach((category) => {
         const div = document.createElement("div");
+
+
         div.innerHTML = `<button onclick="handleButton('${category.category_id}')" class="btn normal-case">${category.category}</button>`;
         
         tabContainer.appendChild(div);
@@ -14,12 +17,34 @@ const handleCategory = async () => {
 };
 
 const handleButton = async (categoryId) => {
+    //console.log(categoryId);
     const res = await fetch(`https://openapi.programming-hero.com/api/videos/category/${categoryId}`);
     const data = await res.json();
 
     const cardContainer = document.getElementById("card-container");
+    cardContainer.innerHTML = "";
+
+    const oopsContainer = document.getElementById("oops-container");
+    oopsContainer.innerHTML = "";
 
     const trimeData = data.data;
+    console.log(trimeData);
+
+    if (trimeData.length === 0) {
+        
+        // Handle the case when there are no videos
+        const div = document.createElement("div");
+        div.innerHTML = `
+        <div class="flex flex-col items-center gap-3">
+            <img src="./icon/Icon.png" alt="" srcset="">
+            <h1 class="text-3xl font-bold text-center">Oops!! Sorry, There is no <br> content here</h1>
+        </div>`;
+    
+            oopsContainer.appendChild(div);
+     
+    }
+
+    else{
 
     trimeData.forEach((videos) => {
         const div = document.createElement("div");
@@ -47,7 +72,12 @@ const handleButton = async (categoryId) => {
 
         cardContainer.appendChild(div);
     });
+}
 };
 
+
+
+
 handleCategory();
+handleButton("1000");
 
