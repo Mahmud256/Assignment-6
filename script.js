@@ -3,11 +3,9 @@ const handleCategory = async () => {
     const data = await res.json();
     const tabContainer = document.getElementById("tab-container");
 
-    const sortContainer = document.getElementById("sort-container");
-
     const trimeData = data.data;
     console.log(trimeData);
-    
+
     trimeData.forEach((category) => {
         const div = document.createElement("div");
         div.innerHTML = `<button onclick="handleButton('${category.category_id}')" class="btn normal-case">${category.category}</button>`;
@@ -15,13 +13,6 @@ const handleCategory = async () => {
     });
 
 
-    
-    
-        const div = document.createElement("div");
-        div.innerHTML = `<button onclick="handleSort()" class="btn normal-case">Sort by view</button>`;
-        sortContainer.appendChild(div);
-    
-    
 };
 
 const handleButton = async (categoryId) => {
@@ -34,7 +25,7 @@ const handleButton = async (categoryId) => {
     oopsContainer.innerHTML = "";
 
     const trimeData = data.data;
-    
+
     if (trimeData.length === 0) {
         // Handle the case when there are no videos
         const div = document.createElement("div");
@@ -44,7 +35,7 @@ const handleButton = async (categoryId) => {
             <h1 class="text-xl md:text-3xl font-bold text-center">Oops!! Sorry, There is no <br> content here</h1>
         </div>`;
         oopsContainer.appendChild(div);
-    } 
+    }
     else {
         trimeData.forEach((videos) => {
             const div = document.createElement("div");
@@ -53,7 +44,7 @@ const handleButton = async (categoryId) => {
             const hours = Math.floor(totalSeconds / 3600);
             const remainingSeconds = totalSeconds % 3600;
             const minutes = Math.floor(remainingSeconds / 60);
-            
+
             div.innerHTML = `
             <div class="gallery h-40">
                 <figure>
@@ -84,36 +75,27 @@ const handleButton = async (categoryId) => {
 
 };
 
-const handleSort = async (sortId) => {
-    const res = await fetch(`https://openapi.programming-hero.com/api/videos/category/${sortId}`);
-    const data = await res.json();
-
+// Function to sort cards by view count
+function sortByViews() {
     const cardContainer = document.getElementById("card-container");
-
-    const trimeData = data.data;
-    //console.log(trimeData);
-
-    
-    const viewsArray = [];
-
-trimeData.forEach((videos) => {
-
-    
-    const view = parseFloat(videos.others.views);
-    viewsArray.push(view);
-});
-
-viewsArray.sort((a, b) => a - b);
-console.log(viewsArray);
-
-//cardContainer.appendChild(viewsArray);
-
-};
-
-
-
-
+    const cardElements = Array.from(cardContainer.children);
+  
+    // Sort card elements based on the data-view attribute
+    cardElements.sort((a, b) => {
+      const viewA = parseInt(a.querySelector(".profile-views").textContent);
+      const viewB = parseInt(b.querySelector(".profile-views").textContent);
+      return viewB - viewA; // Descending order
+    });
+  
+    // Append the sorted card elements back to the card container
+    cardElements.forEach((card) => {
+      cardContainer.appendChild(card);
+    });
+  }
+  
+ 
+sortByViews();
 handleCategory();
 handleButton("1000");
-handleSort("1000");
+
 
