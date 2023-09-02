@@ -82,8 +82,8 @@ function sortContainer() {
   
     // Sort card elements based on the data-view attribute
     cardElements.sort((a, b) => {
-      const viewA = parseInt(a.querySelector(".profile-views").textContent);
-      const viewB = parseInt(b.querySelector(".profile-views").textContent);
+      const viewA = parseFloat(a.querySelector(".profile-views").textContent);
+      const viewB = parseFloat(b.querySelector(".profile-views").textContent);
       return viewB - viewA; // Descending order
     });
   
