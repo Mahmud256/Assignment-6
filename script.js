@@ -76,7 +76,7 @@ const handleButton = async (categoryId) => {
 };
 
 // Function to sort cards by view count
-function sortByViews() {
+function sortContainer() {
     const cardContainer = document.getElementById("card-container");
     const cardElements = Array.from(cardContainer.children);
   
@@ -94,7 +94,7 @@ function sortByViews() {
   }
   
  
-sortByViews();
+sortContainer();
 handleCategory();
 handleButton("1000");
 
