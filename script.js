@@ -3,7 +3,10 @@ const handleCategory = async () => {
     const data = await res.json();
     const tabContainer = document.getElementById("tab-container");
 
+    const sortContainer = document.getElementById("sort-container");
+
     const trimeData = data.data;
+    console.log(trimeData);
     
     trimeData.forEach((category) => {
         const div = document.createElement("div");
@@ -11,6 +14,14 @@ const handleCategory = async () => {
         tabContainer.appendChild(div);
     });
 
+
+    
+    
+        const div = document.createElement("div");
+        div.innerHTML = `<button onclick="handleSort()" class="btn normal-case">Sort by view</button>`;
+        sortContainer.appendChild(div);
+    
+    
 };
 
 const handleButton = async (categoryId) => {
@@ -33,7 +44,8 @@ const handleButton = async (categoryId) => {
             <h1 class="text-xl md:text-3xl font-bold text-center">Oops!! Sorry, There is no <br> content here</h1>
         </div>`;
         oopsContainer.appendChild(div);
-    } else {
+    } 
+    else {
         trimeData.forEach((videos) => {
             const div = document.createElement("div");
             // Calculate hours and minutes
@@ -69,13 +81,39 @@ const handleButton = async (categoryId) => {
             cardContainer.appendChild(div);
         });
     }
+
 };
+
+const handleSort = async (sortId) => {
+    const res = await fetch(`https://openapi.programming-hero.com/api/videos/category/${sortId}`);
+    const data = await res.json();
+
+    const cardContainer = document.getElementById("card-container");
+
+    const trimeData = data.data;
+    //console.log(trimeData);
+
+    
+    const viewsArray = [];
+
+trimeData.forEach((videos) => {
+
+    
+    const view = parseFloat(videos.others.views);
+    viewsArray.push(view);
+});
+
+viewsArray.sort((a, b) => a - b);
+console.log(viewsArray);
+
+//cardContainer.appendChild(viewsArray);
+
+};
+
+
 
 
 handleCategory();
 handleButton("1000");
+handleSort("1000");
 
-
-const blogPage = () => {
-    window.location.href = "blog.html";
-};
